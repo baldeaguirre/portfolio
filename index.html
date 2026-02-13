@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baldemar Aguirre | Data Scientist & Full-Stack Developer</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="description" content="Portfolio of Baldemar Aguirre - Data Scientist with Master's in Data Science & Optimization">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Archivo + Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#18181B',
+                        secondary: '#3F3F46',
+                        accent: '#2563EB',
+                        background: '#FAFAFA',
+                        surface: '#FFFFFF',
+                        'dark-bg': '#0F0F0F',
+                        'dark-surface': '#1A1A1A',
+                        'dark-border': '#2D2D2D',
+                    },
+                    fontFamily: {
+                        sans: ['Archivo', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1A1A1A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3F3F46;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #18181B;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Selection color */
+        ::selection {
+            background: #2563EB;
+        }
+        
+        /* Dark mode transitions */
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-background text-primary antialiased dark:bg-dark-bg dark:text-gray-100">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-gray-200 dark:bg-dark-surface/80 dark:border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="font-mono font-bold text-xl tracking-tight hover:accent transition-colors">
+                    BA<span class="accent">.</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-sm font-medium text-secondary dark:text-gray-400 hover:text-accent transition-colors cursor-pointer">About</a>
+                    <a href="#skills" class="text-sm font-medium text-secondary dark:text-gray-400 hover:text-accent transition-colors cursor-pointer">Skills</a>
+                    <a href="#projects" class="text-sm font-medium text-secondary dark:text-gray-400 hover:text-accent transition-colors cursor-pointer">Projects</a>
+                    <a href="#contact" class="text-sm font-medium text-secondary dark:text-gray-400 hover:text-accent transition-colors cursor-pointer">Contact</a>
+                    <!-- Dark Mode Toggle -->
+                    <button id="dark-mode-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-border transition-colors" aria-label="Toggle dark mode">
+                        <i data-lucide="sun" class="w-5 h-5 text-secondary dark:hidden"></i>
+                        <i data-lucide="moon" class="w-5 h-5 text-yellow-400 hidden dark:block"></i>
+                    </button>
+                </div>
+                <div class="flex items-center space-x-4 md:hidden">
+                    <button id="dark-mode-toggle-mobile" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-border transition-colors" aria-label="Toggle dark mode">
+                        <i data-lucide="sun" class="w-5 h-5 text-secondary dark:hidden"></i>
+                        <i data-lucide="moon" class="w-5 h-5 text-yellow-400 hidden dark:block"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 hover:bg-gray-100 dark:hover:bg-dark-border rounded-lg transition-colors">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-background dark:bg-dark-surface border-t border-gray-200 dark:border-dark-border">
+            <div class="px-4 py-3 space-y-2">
+                <a href="#about" class="block px-3 py-2 text-secondary hover:text-accent hover:bg-gray-50 dark:hover:bg-dark-border dark:text-gray-400 rounded-lg transition-colors cursor-pointer">About</a>
+                <a href="#skills" class="block px-3 py-2 text-secondary hover:text-accent hover:bg-gray-50 dark:hover:bg-dark-border dark:text-gray-400 rounded-lg transition-colors cursor-pointer">Skills</a>
+                <a href="#projects" class="block px-3 py-2 text-secondary hover:text-accent hover:bg-gray-50 dark:hover:bg-dark-border dark:text-gray-400 rounded-lg transition-colors cursor-pointer">Projects</a>
+                <a href="#contact" class="block px-3 py-2 text-secondary hover:text-accent hover:bg-gray-50 dark:hover:bg-dark-border dark:text-gray-400 rounded-lg transition-colors cursor-pointer">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fade-in">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
+                        <span class="w-2 h-2 bg-accent rounded-full mr-2 animate-pulse"></span>
+                        Available for opportunities
+                    </div>
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+                        Hi, I'm <span class="text-accent">Baldemar</span>
+                    </h1>
+                    <h2 class="text-2xl sm:text-3xl font-medium text-secondary dark:text-gray-300 mb-6">
+                        Data Scientist & Full-Stack Developer
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 max-w-xl">
+                        M.Sc. in Data Science & Optimization with 5+ years of experience implementing data-driven solutions. I combine ML expertise with full-stack development to create comprehensive solutions.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-6 text-sm text-gray-500">
+                        <span class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-1"></i> Saltillo, Coahuila, Mexico</span>
+                        <span class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-1"></i> baldeaguirre@gmail.com</span>
+                    </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects" class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-all hover:scale-105 cursor-pointer">
+                            View Projects
+                            <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                        <a href="resume.pdf" download class="inline-flex items-center px-6 py-3 border-2 border-gray-400 dark:border-gray-500 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:border-accent hover:text-accent dark:hover:text-accent transition-all cursor-pointer">
+                            <i data-lucide="download" class="mr-2 w-4 h-4"></i>
+                            Download Resume
+                        </a>
+                    </div>
+                </div>
+                <div class="relative animate-slide-up hidden lg:block">
+                    <div class="relative w-full aspect-square max-w-md mx-auto">
+                        <!-- Decorative elements -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent/20 to-purple-500/20 rounded-3xl transform rotate-3"></div>
+                        <div class="absolute inset-0 bg-surface rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+                            <!-- Profile Photo -->
+                            <img src="profile.jpg" alt="Baldemar Aguirre" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Floating badges -->
+                        <div class="absolute -top-4 -right-4 bg-surface shadow-lg rounded-xl p-3 animate-float border border-gray-200 dark:bg-dark-surface dark:border-gray-700">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="code-2" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <span class="text-sm font-medium dark:text-gray-200">Full-Stack</span>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 bg-surface shadow-lg rounded-xl p-3 animate-float border border-gray-200 dark:bg-dark-surface dark:border-gray-700" style="animation-delay: 1s;">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="brain" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <span class="text-sm font-medium dark:text-gray-200">ML & AI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="py-16 bg-surface dark:bg-dark-surface border-y border-gray-200 dark:border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-accent dark:text-blue-400 mb-2">M.Sc.</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-300">Data Science & Optimization</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-accent dark:text-blue-400 mb-2">5+</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-300">Years Experience</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-accent dark:text-blue-400 mb-2">6</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-300">Professional Roles</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-accent dark:text-blue-400 mb-2">5</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-300">Certifications</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-24 dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 dark:text-gray-100">About Me</h2>
+                <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="space-y-6">
+                    <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                        I am a dedicated Data Scientist with a Master's degree in <strong>Data Science & Optimization</strong>, complemented by a Bachelor's degree in <strong>Industrial Engineering</strong>.
+                    </p>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                        My professional experience spans various industries, where I have successfully implemented data-driven solutions to optimize operations and enhance decision-making processes.
+                    </p>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                        I combine expertise in <strong>machine learning</strong> with <strong>full-stack development</strong> capabilities to create comprehensive solutions that bridge the gap between data analysis and practical application.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-4">
+                        <span class="px-4 py-2 bg-gray-100 dark:bg-dark-surface rounded-full text-sm text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">Problem Solver</span>
+                        <span class="px-4 py-2 bg-gray-100 dark:bg-dark-surface rounded-full text-sm text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">Detail-Oriented</span>
+                        <span class="px-4 py-2 bg-gray-100 dark:bg-dark-surface rounded-full text-sm text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">Team Player</span>
+                        <span class="px-4 py-2 bg-gray-100 dark:bg-dark-surface rounded-full text-sm text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">Continuous Learner</span>
+                    </div>
+                </div>
+                <div class="bg-surface rounded-2xl shadow-lg border border-gray-200 dark:bg-dark-surface dark:border-dark-border p-8">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center dark:text-gray-200">
+                        <i data-lucide="award" class="w-5 h-5 mr-2 text-accent"></i>
+                        Education
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-accent/10 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="graduation-cap" class="w-5 h-5 text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold dark:text-gray-200">M.S. in Data Science & Optimization</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Universidad Autónoma de Coahuila</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">2021–2023</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="book-open" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold dark:text-gray-200">B.Eng. Industrial Engineering</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Instituto Tecnológico de Saltillo</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">2010–2015 | Specialization in Manufacturing Systems</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-8 mb-4 flex items-center">
+                        <i data-lucide="certificate" class="w-5 h-5 mr-2 text-accent"></i>
+                        Certifications
+                    </h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-dark-surface rounded-lg">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <div>
+                                <p class="font-medium">Google Data Analytics Professional Certificate</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">2025</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-dark-surface rounded-lg">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <div>
+                                <p class="font-medium">Google Cloud Computing Foundations</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">2025</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-dark-surface rounded-lg">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <div>
+                                <p class="font-medium">AWS Solutions Architect</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">2022</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-dark-surface rounded-lg">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <div>
+                                <p class="font-medium">Microsoft Azure Fundamentals</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">2021</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 bg-surface dark:bg-dark-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 dark:text-gray-100">Technical Skills</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    A comprehensive toolkit for building data-driven solutions
+                </p>
+                <div class="w-20 h-1 bg-accent dark:bg-blue-500 mx-auto rounded-full mt-4"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Data Science & ML -->
+                <div class="group bg-background dark:bg-dark-surface rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-dark-border hover:shadow-xl hover:border-accent/50 transition-all duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="brain-circuit" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 dark:text-gray-200">Data Science & ML</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm">Python (5 yrs)</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm">TensorFlow</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm">PyTorch</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm">XGBoost</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm">LSTM/GRU</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full text-sm">R (3 yrs)</span>
+                    </div>
+                </div>
+                
+                <!-- Full-Stack Development -->
+                <div class="group bg-background dark:bg-dark-surface rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-dark-border hover:shadow-xl hover:border-accent/50 transition-all duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="code-2" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 dark:text-gray-200">Full-Stack Dev</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm">React</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm">Flask</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm">SQLAlchemy</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm">Tailwind CSS</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm">JWT Auth</span>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm">JavaScript</span>
+                    </div>
+                </div>
+                
+                <!-- Databases & Cloud -->
+                <div class="group bg-background dark:bg-dark-surface rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-dark-border hover:shadow-xl hover:border-accent/50 transition-all duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="database" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 dark:text-gray-200">Databases & Cloud</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full text-sm">PostgreSQL</span>
+                        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full text-sm">MongoDB</span>
+                        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full text-sm">MySQL</span>
+                        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full text-sm">AWS (2 yrs)</span>
+                        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full text-sm">Azure</span>
+                        <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-full text-sm">Docker (2 yrs)</span>
+                    </div>
+                </div>
+                
+                <!-- Tools & Visualization -->
+                <div class="group bg-background dark:bg-dark-surface rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-dark-border hover:shadow-xl hover:border-accent/50 transition-all duration-300 cursor-pointer">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="git-branch" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 dark:text-gray-200">Tools & Viz</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm">Power BI</span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm">Tableau</span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm">Git</span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm">REST APIs</span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm">ETL</span>
+                        <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm">Linux</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skill Progress Bars (Interactive) -->
+            <div class="mt-16 grid lg:grid-cols-2 gap-8">
+                <div class="bg-background dark:bg-dark-surface rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-dark-border">
+                    <h3 class="text-xl font-semibold mb-6">Technical Proficiency</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Python & Data Science</span>
+                                <span class="text-accent">95%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full transition-all duration-1000" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Machine Learning & AI</span>
+                                <span class="text-accent">90%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full transition-all duration-1000" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Full-Stack Development</span>
+                                <span class="text-accent">85%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full transition-all duration-1000" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Cloud & DevOps</span>
+                                <span class="text-accent">80%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-accent to-blue-500 rounded-full transition-all duration-1000" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-background dark:bg-dark-surface rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-dark-border">
+                    <h3 class="text-xl font-semibold mb-6">Soft Skills</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Problem Solving</span>
+                                <span class="text-accent">95%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full transition-all duration-1000" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Communication</span>
+                                <span class="text-accent">90%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full transition-all duration-1000" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Team Collaboration</span>
+                                <span class="text-accent">88%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full transition-all duration-1000" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">Project Management</span>
+                                <span class="text-accent">85%</span>
+                            </div>
+                            <div class="h-3 bg-gray-200 dark:bg-dark-border rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full transition-all duration-1000" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 dark:text-gray-100">Featured Projects</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Selected works showcasing data science and full-stack development expertise
+                </p>
+                <div class="w-20 h-1 bg-accent dark:bg-blue-500 mx-auto rounded-full mt-4"></div>
+            </div>
+            
+            <!-- Project Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="px-6 py-2 bg-accent text-white rounded-full font-medium transition-all hover:scale-105" data-filter="all">All</button>
+                <button class="px-6 py-2 bg-gray-200 dark:bg-dark-surface text-gray-700 dark:text-gray-300 rounded-full font-medium transition-all hover:bg-accent hover:text-white border border-gray-300 dark:border-gray-700" data-filter="ml">ML/AI</button>
+                <button class="px-6 py-2 bg-gray-200 dark:bg-dark-surface text-gray-700 dark:text-gray-300 rounded-full font-medium transition-all hover:bg-accent hover:text-white border border-gray-300 dark:border-gray-700" data-filter="web">Web Dev</button>
+                <button class="px-6 py-2 bg-gray-200 dark:bg-dark-surface text-gray-700 dark:text-gray-300 rounded-full font-medium transition-all hover:bg-accent hover:text-white border border-gray-300 dark:border-gray-700" data-filter="data">Data</button>
+            </div>
+            
+            <!-- Bento Grid Projects -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
+                <!-- Project 1 - Large Card (Revelo) -->
+                <div class="md:col-span-2 lg:col-span-2 row-span-2 group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="ml">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-blue-700 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-sm rounded-full">LLM Review & AI</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-accent transition-colors">LLM Code Review System</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Evaluated and provided human preference feedback on LLM-generated code through comparative analysis. Reviewed Python repositories assessing logic, naming, modularity, and error handling.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded text-sm">Python</span>
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded text-sm">LLM Evaluation</span>
+                            <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded text-sm">Code Review</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 - Tall Card (Magno) -->
+                <div class="md:col-span-1 row-span-2 group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="web">
+                    <div class="h-40 bg-gradient-to-br from-green-600 to-green-700 relative">
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-sm rounded-full">Full-Stack Dev</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition-colors">Condominium Management Platform</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Developed comprehensive web platform with reservations, maintenance reporting, and complaint management. JWT auth, AWS deployment.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded text-sm">React</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded text-sm">Flask</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded text-sm">AWS RDS</span>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded text-sm">Tailwind</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 - Small Card (Research) -->
+                <div class="group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="ml">
+                    <div class="h-32 bg-gradient-to-br from-purple-600 to-purple-700 relative">
+                        <div class="absolute bottom-3 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-xs rounded-full">Research ML</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold mb-1 group-hover:text-accent transition-colors">Energy Consumption Prediction</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">ML/DL models (XGBoost, LSTM, GRU, Seq2Seq) for time series prediction</p>
+                    </div>
+                </div>
+                
+                <!-- Project 4 - Small Card (Data Collection) -->
+                <div class="group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="data">
+                    <div class="h-32 bg-gradient-to-br from-orange-600 to-orange-700 relative">
+                        <div class="absolute bottom-3 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-xs rounded-full">IoT Data</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold mb-1 group-hover:text-accent transition-colors">Real-Time Data Collection</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">Raspberry Pi + MongoDB Atlas + OpenWeather API integration</p>
+                    </div>
+                </div>
+                
+                <!-- Project 5 - Wide Card (Dashboard) -->
+                <div class="md:col-span-2 group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="data">
+                    <div class="h-36 bg-gradient-to-br from-indigo-600 to-indigo-700 relative">
+                        <div class="absolute bottom-4 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-sm rounded-full">Data Visualization</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition-colors">Interactive Energy Dashboard</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Visualization dashboard for consumption patterns, model predictions, cost & emissions estimates. Built with Python, React, and MongoDB.</p>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded text-sm">Python</span>
+                            <span class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded text-sm">React</span>
+                            <span class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded text-sm">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 - Small Card (Automation) -->
+                <div class="group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="data">
+                    <div class="h-32 bg-gradient-to-br from-cyan-600 to-cyan-700 relative">
+                        <div class="absolute bottom-3 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-xs rounded-full">Automation</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold mb-1 group-hover:text-accent transition-colors">ETL Pipeline Automation</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">Python automation reducing processing time by 30%</p>
+                    </div>
+                </div>
+                
+                <!-- Project 7 - Small Card (Analytics) -->
+                <div class="group bg-surface dark:bg-dark-surface rounded-3xl shadow-lg border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-xl transition-all cursor-pointer" data-category="data">
+                    <div class="h-32 bg-gradient-to-br from-pink-600 to-pink-700 relative">
+                        <div class="absolute bottom-3 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur text-white text-xs rounded-full">Analytics</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold mb-1 group-hover:text-accent transition-colors">KPI Analytics</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">R-project statistical analysis, improved query performance by 20%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-surface dark:bg-dark-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 dark:text-gray-100">Get in Touch</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    I'm always open to discussing new opportunities, projects, or just having a chat about data science and development.
+                </p>
+                <div class="w-20 h-1 bg-accent dark:bg-blue-500 mx-auto rounded-full mt-4"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-background dark:bg-dark-surface rounded-2xl shadow-lg border border-gray-200 dark:border-dark-border p-8">
+                    <h3 class="text-xl font-semibold mb-6">Send a Message</h3>
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg text-primary dark:text-gray-100 focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all outline-none" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg text-primary dark:text-gray-100 focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all outline-none" placeholder="your@email.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg text-primary dark:text-gray-100 focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all outline-none" placeholder="What's this about?">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-dark-border bg-white dark:bg-dark-bg text-primary dark:text-gray-100 focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all outline-none resize-none" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-all hover:scale-[1.02] flex items-center justify-center">
+                            <i data-lucide="send" class="mr-2 w-5 h-5"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div class="bg-background dark:bg-dark-surface rounded-2xl shadow-lg border border-gray-200 dark:border-dark-border p-8">
+                        <h3 class="text-xl font-semibold mb-6">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-accent/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="mail" class="w-5 h-5 text-accent"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Email</p>
+                                    <p class="font-medium">baldeaguirre@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-accent/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="phone" class="w-5 h-5 text-accent"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">WhatsApp</p>
+                                    <p class="font-medium">+52 844 592 2492</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-accent/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-accent"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Location</p>
+                                    <p class="font-medium">Saltillo, Coahuila, Mexico</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-accent/10 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                                    <i data-lucide="clock" class="w-5 h-5 text-accent"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Availability</p>
+                                    <p class="font-medium">Open to opportunities</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="bg-background dark:bg-dark-surface rounded-2xl shadow-lg border border-gray-200 dark:border-dark-border p-8">
+                        <h3 class="text-xl font-semibold mb-6">Connect With Me</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://github.com/baldeaguirre" target="_blank" rel="noopener noreferrer" class="w-12 h-12 bg-gray-100 dark:bg-dark-surface rounded-xl flex items-center justify-center hover:bg-accent hover:text-white transition-all hover:scale-110">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/baldemar-aguirre/?locale=en" target="_blank" rel="noopener noreferrer" class="w-12 h-12 bg-gray-100 dark:bg-dark-surface rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all hover:scale-110">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://wa.me/528445922492" target="_blank" rel="noopener noreferrer" class="w-12 h-12 bg-gray-100 dark:bg-dark-surface rounded-xl flex items-center justify-center hover:bg-green-500 hover:text-white transition-all hover:scale-110">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-200 dark:border-dark-border dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="font-mono font-bold text-xl">BA<span class="accent">.</span></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">© 2026 Baldemar Aguirre. All rights reserved.</p>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-accent transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-500 hover:text-accent transition-colors">Terms</a>
+                    <a href="#" class="text-gray-500 hover:text-accent transition-colors">Built with</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Project filter functionality
+        const filterBtns = document.querySelectorAll('[data-filter]');
+        const projectCards = document.querySelectorAll('[data-category]');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                
+                // Update active button
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-accent', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-secondary');
+                });
+                btn.classList.remove('bg-gray-200', 'text-secondary');
+                btn.classList.add('bg-accent', 'text-white');
+                
+                // Filter projects
+                projectCards.forEach(card => {
+                    const category = card.dataset.category;
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeIn 0.5s ease-out';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Animate progress bars on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+        
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('[style*="width:"]');
+                    progressBars.forEach(bar => {
+                        bar.style.width = bar.style.width;
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            progressObserver.observe(skillsSection);
+        }
+        
+        // Contact form handling
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message! This is a demo form.');
+        });
+        
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+        const html = document.documentElement;
+        
+        // Check for saved preference
+        const savedDarkMode = localStorage.getItem('darkMode');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedDarkMode === 'true' || (!savedDarkMode && prefersDark)) {
+            html.classList.add('dark');
+        }
+        
+        function toggleDarkMode() {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        }
+        if (darkModeToggleMobile) {
+            darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+        }
+        
+        // Add scroll animations
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-slide-up');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.group').forEach(el => {
+            scrollObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
